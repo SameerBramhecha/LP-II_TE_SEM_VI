@@ -1,6 +1,6 @@
 /*
 Assignment Number 1:
-Implement DFS and BFS to search vertices in a graph in a recursove manner.
+Implement DFS and BFS to search vertices in a graph in a recursive manner.
 */
 
 #include <bits/stdc++.h>
