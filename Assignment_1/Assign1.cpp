@@ -130,6 +130,7 @@ int main()
         switch (ch)
         {
         case 1:
+            cout << "Entered Graph is: " nl;
             g.display();
             break;
         case 2:
@@ -140,7 +141,7 @@ int main()
             cout nl;
             break;
         case 3:
-            cout << "Enter node to start dfs from: " nl;
+            cout << "Enter node to start bfs from: " nl;
             int n2;
             cin >> n2;
             g.bfsr(n2);
