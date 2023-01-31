@@ -50,7 +50,9 @@ public:
     void create(int edge);
     void display();
     void dfsr(int);
+    void dfs(int);
     void bfsr(int);
+    void bfs(int);
 };
 void Graph::create(int edge) // function to create a graph
 {
@@ -76,6 +78,29 @@ void Graph::display() // function to display a graph
         cout nl;
     }
 }
+void Graph::dfs(int v1)
+{
+    vector<bool> visited(n, false);
+    stack<int> s;
+    s.push(v1);
+    while (!s.empty())
+    {
+        int a = s.top();
+        s.pop();
+        if (!visited[a])
+        {
+            cout << a << " ";
+            visited[a] = true;
+        }
+        rep(v2, 0, n)
+        {
+            if (gr[a][v2] == 1 && !visited[v2])
+            {
+                s.push(v2);
+            }
+        }
+    }
+}
 void Graph::dfsr(int v1) // function for Depth First Traversal
 {
     cout << v1 << " ";
@@ -88,7 +113,28 @@ void Graph::dfsr(int v1) // function for Depth First Traversal
         }
     }
 }
-void Graph::bfsr(int v1) // function for Breadth First Traversal
+void Graph::bfs(int v1)
+{
+    queue<int> q;
+    vector<bool> visited(n, false);
+    q.push(v1);
+    visited[v1] = true;
+    while (!q.empty())
+    {
+        int s = q.front();
+        q.pop();
+        cout << s << " ";
+        rep(v2, 0, n)
+        {
+            if (gr[s][v2] == 1 && !visited[v2])
+            {
+                q.push(v2);
+                visited[v2] = true;
+            }
+        }
+    }
+}
+void Graph::bfsr(int v1) // function for Recursive Breadth First Traversal
 {
     cout << v1 << " ";
     visited2[v1] = 1;
@@ -137,14 +183,20 @@ int main()
             cout << "Enter node to start dfs from: " nl;
             int n1;
             cin >> n1;
+            cout << "Recursive DFS: " nl;
             g.dfsr(n1);
+            cout << "Non - Recursive DFS: " nl;
+            g.dfs(n1);
             cout nl;
             break;
         case 3:
             cout << "Enter node to start bfs from: " nl;
             int n2;
             cin >> n2;
+            cout << "Recursive BFS: " nl;
             g.bfsr(n2);
+            cout << "Non - Recursive BFS: " nl;
+            g.bfs(n2);
             cout nl;
             break;
         case 4:
