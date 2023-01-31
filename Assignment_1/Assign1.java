@@ -43,12 +43,50 @@ public class Assign1 {
         }
     }
 
+    void dfs(int v1) {
+        boolean[] visited = new boolean[n];
+        for (int i = 0; i < n; i++) {
+            visited[i] = false;
+        }
+        Stack<Integer> ss = new Stack<>();
+        ss.push(v1);
+        while (!ss.isEmpty()) {
+            int a = ss.pop();
+            if (!visited[a]) {
+                System.out.print(a + " ");
+                visited[a] = true;
+            }
+            for (int v2 = 0; v2 < n; v2++) {
+                if (gr[a][v2] == 1 && !visited[v2]) {
+                    ss.push(v2);
+                }
+            }
+        }
+    }
+
     void dfsr(int v1) {
         System.out.print(v1 + " ");
         visited1[v1] = 1;
         for (int v2 = 0; v2 < n; v2++) {
             if (gr[v1][v2] == 1 && visited1[v2] == 0) {
                 dfsr(v2);
+            }
+        }
+    }
+
+    void bfs(int v1) {
+        boolean visited[] = new boolean[n];
+        Queue<Integer> q1 = new LinkedList<>();
+        q1.add(v1);
+        visited[v1] = true;
+        while (!q1.isEmpty()) {
+            int a = q1.remove();
+            System.out.print(a + " ");
+            for (int v2 = 0; v2 < n; v2++) {
+                if (gr[a][v2] == 1 && !visited[v2]) {
+                    q1.add(v2);
+                    visited[v2] = true;
+                }
             }
         }
     }
@@ -94,13 +132,21 @@ public class Assign1 {
                 case 2:
                     System.out.println("Enter node to start dfs from: ");
                     int n1 = sc.nextInt();
+                    System.out.println("Recursive DFS: ");
                     a.dfsr(n1);
+                    System.out.println();
+                    System.out.println("Non - Recursive DFS: ");
+                    a.dfs(n1);
                     System.out.println();
                     break;
                 case 3:
                     System.out.println("Enter node to start bfs from: ");
                     int n2 = sc.nextInt();
+                    System.out.println("Recursive BFS: ");
                     a.bfsr(n2);
+                    System.out.println();
+                    System.out.println("Non - Recursive BFS: ");
+                    a.bfs(n2);
                     System.out.println();
                     break;
                 case 4:
