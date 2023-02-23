@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
@@ -25,19 +26,12 @@ public:
 };
 class Graph
 {
+public:
     map<string, vector<Node>> adj;
     map<string, int> H;
-
-public:
     Graph(map<string, vector<Node>> adjac_lis)
     {
         adj = adjac_lis;
-        H["A"] = 11;
-        H["B"] = 6;
-        H["C"] = 99;
-        H["D"] = 1;
-        H["E"] = 7;
-        H["G"] = 0;
     }
     vector<Node> get_neighbors(string name)
     {
@@ -134,26 +128,76 @@ public:
 int main()
 {
     map<string, vector<Node>> adjac_lis;
+    int n;
+    cout << "Enter number of nodes: " nl;
+    cin >> n;
     cout << "Enter The Graph: " nl;
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 22; i++)
     {
         string a, b;
-        cin >> a >> b;
         int w;
-        cin >> w;
+        cin >> a >> b >> w;
         Node obj(b, w);
         adjac_lis[a].push_back(obj);
     }
     Graph g(adjac_lis);
-    g.a_star("A", "G");
+    cout << "Enter Heuristic distances: " nl;
+    rep(i, 0, n)
+    {
+        string name;
+        int heuristic;
+        cin >> name >> heuristic;
+        g.H[name] = heuristic;
+    }
+    g.a_star("A", "B");
     return 0;
 }
 
 /*
-A B 2
-A E 3
-B C 1
-B G 9
-D G 1
-E D 6
+Graph: -
+A Z 75
+A T 118
+A S 140
+Z O 71
+O S 151
+T L 111
+L M 70
+M D 75
+D C 120
+C R 146
+R S 80
+S F 77
+F B 211
+R P 97
+P B 101
+B G 90
+B U 85
+U V 142
+U H 98
+H E 86
+V I 92
+I N 87
+
+
+Heuristic: -
+A 366
+B 0
+C 160
+D 242
+E 161
+F 176
+G 77
+H 151
+I 226
+L 244
+M 241
+N 234
+O 380
+P 100
+R 193
+S 253
+T 329
+U 80
+V 199
+Z 374
 */
