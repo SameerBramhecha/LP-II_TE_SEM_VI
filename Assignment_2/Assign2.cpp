@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
@@ -13,6 +12,7 @@
 #define sort(a) sort(a.begin(), a.end())
 #define nl << endl
 using namespace std;
+
 class Node{
     
     public:
@@ -128,7 +128,6 @@ int main(){
     return 0;
 }
 
-
 /*
 Input 1 -->
 n = 20
@@ -144,8 +143,9 @@ L M 70
 M D 75
 D C 120
 C R 146
+C P 138
 R S 80
-S F 77
+S F 99
 F B 211
 R P 97
 P B 101
@@ -156,8 +156,6 @@ U H 98
 H E 86
 V I 92
 I N 87
-
-
 Heuristic: -
 A 366
 B 0
@@ -184,7 +182,6 @@ Input 2 -->
 Graph: -
 n = 7
 e = 9
-
 A B 4
 A C 3
 B E 12
@@ -194,7 +191,6 @@ C D 7
 D E 2
 F Z 16
 E Z 5
-
 Heuristic: -
 A 14
 B 12
