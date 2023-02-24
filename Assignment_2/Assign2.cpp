@@ -13,147 +13,126 @@
 #define sort(a) sort(a.begin(), a.end())
 #define nl << endl
 using namespace std;
-class Node
-{
-public:
+class Node{
+    
+    public:
     string name;
     int weight;
-    Node(string name, int weight)
-    {
-        this->name = name;
-        this->weight = weight;
-    }
+        Node(string name,int weight){
+            this->name = name;
+            this->weight = weight;
+        }
 };
-class Graph
-{
-public:
-    map<string, vector<Node>> adj;
-    map<string, int> H;
-    Graph(map<string, vector<Node>> adjac_lis)
-    {
-        adj = adjac_lis;
+class Graph{
+    public: 
+    map<string,vector<Node>> adj;
+    map<string,int> H;
+    Graph(map<string,vector<Node>> adj_list){
+        adj = adj_list;
     }
-    vector<Node> get_neighbors(string name)
-    {
-        return adj.at(name);
+    vector<Node> get_neighbors(string v){
+        return adj[v];
     }
-    int h(string v)
-    {
+    int h(string v){
         return H[v];
     }
-    void a_star(string source, string destination)
-    {
-        /*
-        open_list is a list of nodes which have been visited, but who's neighbors
-        haven't all been inspected, starts off with the start node
-        closed_list is a list of nodes which have been visited
-        and who's neighbors have been inspected
-        */
-        set<string> open_list, closed_list;
+    void a_star(string source,string destination){
+        set<string> open_list,closed_list;
         open_list.insert(source);
-        // g contains current distances from start_node to all other nodes
-        // the default value (if it's not found in the map) is +infinity
-        map<string, int> g;
+        map<string,int> g;
         g[source] = 0;
-        // parents contains an adjacency map of all nodes
-        map<string, string> parent;
+        map<string,string> parent;
         parent[source] = source;
-        while (open_list.size() > 0)
-        {
+        while(open_list.size()>0){
             string n = "";
-            // find a node with lowest f(n)
-            for (string v : open_list)
-            {
-                if (n == "" || (g[v] + h(v)) < (g[n] + h(n)))
-                {
+            int f = 0;
+            for(string v:open_list){ 
+                if(n=="" || (g[v]+h(v)) < (g[n]+h(n))){
                     n = v;
+                    f = g[v] + h(v);
                 }
             }
-            if (n == "")
-            {
-                cout << "NO PATH EXISTS!!" << endl;
+            if(n==""){
+                cout<<"NO PATH EXISTS" nl;
                 return;
             }
-            // if the current node is the stop_node
-            // then we begin reconstructin the path from it to the start_node
-            if (n == destination)
-            {
+            if(n==destination){
                 vector<string> recons_path;
-                while (parent[n] != n)
-                {
+                while(parent[n]!=n){
                     recons_path.push_back(n);
                     n = parent[n];
                 }
                 recons_path.push_back(n);
-                reverse(recons_path.begin(), recons_path.end());
-                cout << "Path found: " nl;
-                for (string x : recons_path)
-                {
-                    cout << x << " ";
+                reverse(recons_path.begin(),recons_path.end());
+                cout << "Path Exists: " nl;
+                for(auto v:recons_path){
+                    cout << v <<" ";
                 }
+                cout nl;
+                cout<<"Path Cost: " nl;
+                cout << f nl;
                 return;
+
             }
-            // for all neighbors of the current node do
-            for (Node v : get_neighbors(n))
-            {
-                // if the current node isn't in both open_list and closed_list
-                // add it to open_list and note n as it's parent
-                if (!(closed_list.count(v.name)) && !(open_list.count(v.name)))
-                {
+            for(Node v: get_neighbors(n)){
+                if(!closed_list.count(v.name) && !open_list.count(v.name)){
                     open_list.insert(v.name);
                     parent[v.name] = n;
-                    g[v.name] = g.at(n) + v.weight;
+                    g[v.name] = g[n] + v.weight;
                 }
-                else
-                {
-                    if (g[v.name] > g[n] + v.weight)
-                    {
-                        g[v.name] = g.at(n) + v.weight;
+                else{
+                    if(g[v.name] > (g[n] + v.weight)){
+                        g[v.name] = g[n] + v.weight;
                         parent[v.name] = n;
                     }
-                    if (closed_list.count(v.name))
-                    {
+                    if(closed_list.count(v.name)){
                         closed_list.erase(v.name);
-                        open_list.insert(v.name);
+                        closed_list.insert(v.name);
                     }
                 }
             }
-            // remove n from the open_list, and add it to closed_list
-            // # because all of his neighbors were inspected
             open_list.erase(n);
             closed_list.insert(n);
         }
     }
 };
-int main()
-{
-    map<string, vector<Node>> adjac_lis;
-    int n;
-    cout << "Enter number of nodes: " nl;
-    cin >> n;
-    cout << "Enter The Graph: " nl;
-    for (int i = 0; i < 22; i++)
-    {
-        string a, b;
+int main(){
+    map<string, vector<Node>> adj_list;
+    int n,e;
+    cout<<"Enter Number of Nodes: " nl;
+    cin>>n;
+    cout<<"Enter number of edges: " nl;
+    cin>>e;
+    cout<<"Enter the Graph: " nl;
+    for(int i=0;i<e;i++){
+        string a,b;
         int w;
-        cin >> a >> b >> w;
-        Node obj(b, w);
-        adjac_lis[a].push_back(obj);
+        cin>>a>>b>>w;
+        Node obj(b,w);
+        adj_list[a].push_back(obj);
     }
-    Graph g(adjac_lis);
-    cout << "Enter Heuristic distances: " nl;
-    rep(i, 0, n)
-    {
+    Graph g(adj_list);
+    cout<<"Enter Heuristic Distances: " nl;
+    rep(i,0,n){
         string name;
         int heuristic;
-        cin >> name >> heuristic;
+        cin>>name>>heuristic;
         g.H[name] = heuristic;
     }
-    g.a_star("A", "B");
+    string source,destination;
+    cout<<"Enter source Node: " nl;
+    cin>>source;
+    cout<<"Enter Destination Node: " nl;
+    cin>>destination;
+    g.a_star(source,destination);
     return 0;
 }
 
+
 /*
+Input 1 -->
+n = 20
+e = 22
 Graph: -
 A Z 75
 A T 118
@@ -200,4 +179,28 @@ T 329
 U 80
 V 199
 Z 374
+
+Input 2 -->
+Graph: -
+n = 7
+e = 9
+
+A B 4
+A C 3
+B E 12
+B F 5
+C E 10
+C D 7
+D E 2
+F Z 16
+E Z 5
+
+Heuristic: -
+A 14
+B 12
+C 11
+D 6
+E 4
+F 11
+Z 0
 */
