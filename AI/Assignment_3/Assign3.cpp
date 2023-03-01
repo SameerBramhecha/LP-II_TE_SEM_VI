@@ -24,8 +24,15 @@ vector<int> selectionsort(vector<int> a)
 
 int main()
 {
-    vector<int> a = {8, 5, 7, 6, 2, 3, 4};
-    int n = a.size();
+    int n;
+    cout << "Enter the number of elements: " << endl;
+    cin >> n;
+    vector<int> a(n);
+    cout << "Enter the elements: " << endl;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
     cout << "Unsorted Array: " << endl;
     for (auto i : a)
     {
