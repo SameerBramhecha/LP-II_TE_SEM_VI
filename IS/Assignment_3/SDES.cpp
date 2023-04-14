@@ -284,8 +284,7 @@ int main()
     string pta = s.decrypt(ct);
     if (pt == pta)
     {
-        cout << "Algorithm Worked Successfully" << endl;
-        cout << "Retrieved Plain Text" << endl;
+        cout << "Algorithm Worked Successfully!! \nChill Life!!!!.. Mouj Karo" << endl;
     }
     return 0;
 }
