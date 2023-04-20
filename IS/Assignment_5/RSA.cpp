@@ -8,7 +8,7 @@ class RSA
 public:
     int gcd(int, int);
     bool isPrime(int);
-    void generateprimes();
+    void acceptprimes();
     void generatekey();
     void encdec();
 };
@@ -31,7 +31,7 @@ bool RSA::isPrime(int a)
     }
     return true;
 }
-void RSA::generateprimes()
+void RSA::acceptprimes()
 {
 l1:
     cout << "Enter 1st prime number p: " << endl;
@@ -79,17 +79,17 @@ void RSA::encdec()
 {
     cout << "Enter message to encrypt: " << endl;
     cin >> m;
-    c = fmod(pow(m, e), n);
+    c = pow(m, e);
+    double pt = pow(c, d);
+    c = fmod(c, n);
+    pt = fmod(pt, n);
     cout << "Encrypted Message: " << c << endl;
-    cout << d << endl;
-    cout << n << endl;
-    double pt = fmod(pow(c, d), n);
     cout << "Decrypted Message: " << pt << endl;
 }
 int main()
 {
     RSA rsa;
-    rsa.generateprimes();
+    rsa.acceptprimes();
     rsa.generatekey();
     rsa.encdec();
     return 0;
