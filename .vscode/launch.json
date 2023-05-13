@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/bramh/Desktop/PICT/TE SEM VI/LP-II",
-      "program": "c:/Users/bramh/Desktop/PICT/TE SEM VI/LP-II/build/Debug/outDebug",
+      "cwd": "c:/Users/bramh/Desktop/PICT/TE SEM VI/LP-II/LP-II_TE_SEM_VI/AI",
+      "program": "c:/Users/bramh/Desktop/PICT/TE SEM VI/LP-II/LP-II_TE_SEM_VI/AI/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
