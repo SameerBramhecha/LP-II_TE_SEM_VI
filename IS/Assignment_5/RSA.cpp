@@ -2,64 +2,63 @@
 using namespace std;
 class RSA
 {
-    double p, q;
-    double n, phin, e, d, m, c;
+    long long p, q, n, phin, e, d, c, m;
 
 public:
-    int gcd(int, int);
-    bool isPrime(int);
-    void acceptprimes();
-    void generatekey();
+    long long gcd(long long, long long);
+    bool isPrime(long long);
+    void acceptPrimes();
+    void generateKey();
     void encdec();
 };
-int RSA::gcd(int a, int b)
+long long RSA::gcd(long long a, long long b)
 {
     return (b == 0) ? a : gcd(b, a % b);
 }
-bool RSA::isPrime(int a)
+bool RSA::isPrime(long long a)
 {
     if (a <= 1)
     {
         return false;
     }
-    for (int i = 2; i * i <= a; i++)
+    else
     {
-        if (a % i == 0)
+        for (int i = 2; i * i <= a; i++)
         {
-            return false;
+            if (a % i == 0)
+            {
+                return false;
+            }
         }
+        return true;
     }
-    return true;
 }
-void RSA::acceptprimes()
+void RSA::acceptPrimes()
 {
 l1:
-    cout << "Enter 1st prime number p: " << endl;
+    cout << "Enter Prime p" << endl;
     cin >> p;
     if (!isPrime(p))
     {
-        cout << "p is not prime!!" << endl;
+        cout << "p is not prime\n please enter a prime number" << endl;
         goto l1;
     }
 l2:
-
-    cout << "Enter second prime number q: " << endl;
+    cout << "Enter Prime q" << endl;
     cin >> q;
     if (!isPrime(q))
     {
-        cout << "q is not prime!!" << endl;
+        cout << "q is not prime\n please enter a prime number" << endl;
         goto l2;
     }
-    cout << p << " " << q << endl;
 }
-
-void RSA::generatekey()
+void RSA::generateKey()
 {
     n = p * q;
-    cout << "n = " << n << endl;
+    cout << "n: " << n << endl;
     phin = (p - 1) * (q - 1);
-    cout << "phi(n) = " << phin << endl;
-    e = 5;
+    cout << "phin: " << phin << endl;
+    e = 2;
     for (; e < phin; e++)
     {
         if (gcd(e, phin) == 1)
@@ -68,29 +67,37 @@ void RSA::generatekey()
         }
     }
     cout << "e: " << e << endl;
-    double d1 = 1 / e;
-    d = fmod(d1, phin);
+    long long k = 0;
+    for (;; k++)
+    {
+        if ((1 + (k * phin)) % e == 0)
+        {
+            break;
+        }
+    }
+    d = (1 + (k * phin)) / e;
+    d = fmod(d, n);
     cout << "d: " << d << endl;
-
-    cout << "Public Key : PU = {" << e << "," << n << "}" << endl;
-    cout << "Private Key : PK = {" << d << "," << n << "}" << endl;
+    cout << "Public key: { " << e << "," << n << "}" << endl;
+    cout << "Private key: { " << d << "," << n << "}" << endl;
 }
+
 void RSA::encdec()
 {
-    cout << "Enter message to encrypt: " << endl;
+    cout << "Enter message to be encrypted: " << endl;
     cin >> m;
     c = pow(m, e);
-    double pt = pow(c, d);
     c = fmod(c, n);
+    long long pt = pow(c, d);
     pt = fmod(pt, n);
     cout << "Encrypted Message: " << c << endl;
     cout << "Decrypted Message: " << pt << endl;
 }
 int main()
 {
-    RSA rsa;
-    rsa.acceptprimes();
-    rsa.generatekey();
-    rsa.encdec();
+    RSA r;
+    r.acceptPrimes();
+    r.generateKey();
+    r.encdec();
     return 0;
 }
