@@ -24,6 +24,7 @@ bool NQueens::isSafe(vector<string> board, int row, int col)
             return false;
         }
     }
+    
     // vertically checking
     rep(i, 0, n)
     {
