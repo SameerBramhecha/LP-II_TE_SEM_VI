@@ -1,6 +1,5 @@
 import re
 import random
-
 # Define the chatbot's rules and responses
 rules = {
     'greeting': {
